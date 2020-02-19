@@ -1,14 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import Char from "../GameLogic/Char";
+import GameLoop from "../GameLogic/GameLoop"
 
-let mousePos = {x: 0, y: 0};
+import * as GameStates from "../GameLogic/GameStates"
+
+let gameLoop;//need to declare outside of Game() cause otherwise we'll lose reference to it and it will keep looping forever, never being garbage collected
 
 function Game() {
 
+    const [gameText, setGameText] = useState("Hello, my name is Daniel. Welcome to my portfolio.\nCheck out _my projects_. Or, view my resume _here_.\n\nYou can also type text in here and then press Play to destroy it.");
     const [canvas, setCanvas] = useState();
-    const [size, setSize] = useState();
+    const [gameState, setGameState] = useState(GameStates.GAME_NOT_STARTED);
 
     let canvasRef = React.createRef();
+
+    document.addEventListener('input', function (event) {
+        if (event.target.tagName.toLowerCase() !== 'textarea') return;
+        autoExpand(event.target);
+    }, false);
+
+    var autoExpand = function (field) {
+
+        // Reset field height
+        field.style.height = 'inherit';
+
+        // Get the computed styles for the element
+        var computed = window.getComputedStyle(field);
+
+        // Calculate the height
+        var height = parseInt(computed.getPropertyValue('border-top-width'), 10)
+            + parseInt(computed.getPropertyValue('padding-top'), 10)
+            + field.scrollHeight
+            + parseInt(computed.getPropertyValue('padding-bottom'), 10)
+            + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+
+        field.style.height = height + 'px';
+
+    };
 
     useEffect(() => {
         setCanvas(canvasRef.current);
@@ -20,6 +47,30 @@ function Game() {
         window.addEventListener('resize', resizeCanvas)
     })
 
+    function setGameStateCallback(newGameState) {
+        var sCallerName;
+        {
+            let re = /([^(]+)@|at ([^(]+) \(/g;
+            let aRegexResult = re.exec(new Error().stack);
+            sCallerName = aRegexResult[1] || aRegexResult[2];
+        }
+        console.log(sCallerName);
+        if (gameState === GameStates.GAME_IN_PROGRESS) {
+            //console.log("SOMEONE SET IT TO IN PROGRESS. THAT FRICKIN FRICK")
+        }
+        if (newGameState === GameStates.GAME_END_LOSS || newGameState === GameStates.GAME_END_WIN) {//only allowed to transition to game end while GAMEINPROGRESS
+            if (gameState === GameStates.GAME_IN_PROGRESS) {
+                gameLoop.stopLoop();
+                console.log("GAME OVER", newGameState, gameState);
+                setGameState(newGameState);
+                console.log("Game state after setting to END_LOSS:", gameState, newGameState);
+            }
+        } else {
+            console.log("Setting game state to: ", newGameState);
+            setGameState(newGameState);
+        }
+    }
+
     function resizeCanvas() {
         if (canvas) {
             canvas.width = window.innerWidth;
@@ -27,64 +78,41 @@ function Game() {
         }
     }
 
-    if (canvas) {
-
-        let c = canvas.getContext("2d");
-
-        c.fillRect(100, 100, 100, 100);
-
-        let fontSize = 30
-
-        c.font = fontSize + 'px ' + 'Arial';
-        c.lineWidth = 2;
-        c.textBaseline = 'middle';
-        c.textAlign = 'center';
-        c.fillStyle = "white";
-
-        let originalText = "Helllllo world! ! !!! Spacing test";
-        let totalOffset = 0;
-
-        let characters = []
-
-        //initialize by filling characters array with Chars for each character in text
-        for (let i = 0; i < originalText.length; i++) {
-            let position = { x: window.innerWidth / 2 - c.measureText(originalText).width / 2 + (totalOffset + c.measureText(originalText[i]).width / 2), y: window.innerHeight / 2 }
-            let char = new Char(originalText[i], position, c.measureText(originalText[i]).width, i);
-            characters.push(char);
-            totalOffset += c.measureText(originalText[i]).width;
-        }
-
-        let lastTime;
-
-        function frame(currentTime) {
-
-            c.clearRect(0, 0, canvas.width, canvas.height);//clear previous frame
-
-            if (!lastTime) lastTime = currentTime;
-            let deltaTime = currentTime - lastTime;//time since last frame
-            lastTime = currentTime;
-
-            //draw chars
-            characters.forEach((char) => {
-                c.fillText(char.text, char.position.x, char.position.y)
-            });
-
-            //draw paddle
-            console.log("mouse pos", mousePos);
-            let paddleWidth = 100;
-            c.fillRect(mousePos.x - paddleWidth/2, window.innerHeight - window.innerHeight/10, paddleWidth, 15);
-
-            requestAnimationFrame(frame);
-        }
-
-        frame();//get the frame loop going
-
+    switch (gameState) {
+        case GameStates.GAME_NOT_STARTED:
+            return (
+                <div id="preGame">
+                    <div><textarea cols="40" id="preGameText" onChange={(e) => { setGameText(e.target.value) }}>{gameText}</textarea></div>
+                    <div id="preGamePadding"></div>
+                    <button onClick={(e) => { setGameState(GameStates.GAME_IN_PROGRESS) }}>Play</button>
+                </div>
+            );
+        case GameStates.GAME_IN_PROGRESS:
+            if (canvas) {
+                if (gameLoop) {
+                    gameLoop.stopLoop();
+                }
+                gameLoop = new GameLoop(canvas, gameText, setGameStateCallback);
+                gameLoop.startLoop();
+            }
+            return (
+                <canvas onMouseMove={(e) => { if (gameLoop) gameLoop.updateMousePosition({ x: e.pageX, y: e.pageY }) }} ref={canvasRef} id="game"></canvas>
+            );
+        case GameStates.GAME_END_LOSS:
+            return (
+                <div id="gameLost">
+                    <h1>GAME OVER</h1>
+                    <button onClick={(e) => { e.preventDefault(); setGameState(GameStates.GAME_NOT_STARTED) }}>Continue</button>
+                </div>
+            );
+        case GameStates.GAME_END_WIN:
+            return (
+                <div id="gameWon">
+                    <h1>YOU WON</h1>
+                    <button onClick={(e) => { setGameState(GameStates.GAME_NOT_STARTED) }}>Continue</button>
+                </div>
+            );
     }
-
-
-    return (
-        <canvas onMouseMove={(e) => {mousePos={x: e.pageX, y: e.pageY}}} ref={canvasRef} id="game"></canvas>
-    );
 }
 
 export default Game;

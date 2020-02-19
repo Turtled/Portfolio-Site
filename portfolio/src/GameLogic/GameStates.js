@@ -1,0 +1,4 @@
+export const GAME_NOT_STARTED = "GAME_NOT_STARTED";
+export const GAME_IN_PROGRESS = "GAME_IN_PROGRESS";
+export const GAME_END_LOSS = "GAME_END_LOSS";
+export const GAME_END_WIN = "GAME_END_WIN";
