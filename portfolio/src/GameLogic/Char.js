@@ -1,15 +1,17 @@
 class Char {
 
-    constructor(text, position, size, stringIndex, particleCallback) {
-        this.text = text;
+    constructor(text, position, size, stringIndex, particleCallback, isNewline=false) {
+        this.originalChar = text;
+        this.char = text;
         this.position = position;
         this.size = size;
         this.stringIndex = stringIndex;
         this.doDestroyParticles = particleCallback;
+        this.isNewline = isNewline;
     }
 
     draw(context) {
-        context.fillText(this.text, this.position.x, this.position.y);
+        context.fillText(this.char, this.position.x, this.position.y);
     }
 
     height = 30;
@@ -21,7 +23,7 @@ class Char {
     }
 
     boundsInclude(position, size) {
-        if(this.text == " ") {
+        if(this.char == " ") {
             return false;
         }
         if (position.x + size.width / 2 > this.position.x - this.size / 2 && position.x + size.width / 2 < this.position.x + this.size / 2 ||

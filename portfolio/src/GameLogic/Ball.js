@@ -1,18 +1,17 @@
 import Particles from "./Particles";
-import * as GameStates from "../GameLogic/GameStates"
 
 class Ball {
 
     timeSinceLastCollision = 210293129;
-    collisionCooldown = 20;
+    collisionCooldown = 40;
 
     stop = false;
 
-    constructor(position, size, setGameState) {
+    constructor(position, size, endGame) {
         this.velocity = { x: .2, y: .5 };
         this.size = size;
         this.position = position;
-        this.setGameState = setGameState;
+        this.endGame = endGame;
     }
 
     draw(context) {
@@ -28,7 +27,7 @@ class Ball {
         characters.forEach(char => {
             if (char.boundsInclude(this.position, this.size) && this.timeSinceLastCollision >= this.collisionCooldown) {
                 this.timeSinceLastCollision = 0;
-                char.text = " ";
+                char.char = " ";
                 char.doDestroyParticles(new Particles({ x: char.position.x, y: char.position.y }, Math.random() * 5 + 5));//spawn particles at the character's position; amount ranging from 0 - 10 
                 if (char.getCollisionSide(this.position) == "x") {
                     console.log("X Reflection")
@@ -41,14 +40,13 @@ class Ball {
 
                 let stillACharLeft = false;
                 characters.forEach(char => {
-                    if (char.text != " ") {
+                    if (char.char != " " && char.char != "" ) {
                         stillACharLeft = true;
                     }
                 });
                 if (stillACharLeft === false) {//they won!
                     if (this.stop === false) {
-                        console.log("Game overing");
-                        this.setGameState(GameStates.GAME_END_WIN);
+                        this.endGame(true);
                         this.stop = true;
                     }
                 }
@@ -70,8 +68,7 @@ class Ball {
         if (this.position.y >= window.innerHeight) {//ball hit the bottom of the screen, GAME OVER
             if (this.stop === false) {
                 console.log(this.position.y, ">=" ,window.innerHeight, " = ", this.position.y >= window.innerHeight)
-                console.log("Game overing");
-            this.setGameState(GameStates.GAME_END_LOSS);
+            this.endGame(false);
             this.stop = true;
             }
 

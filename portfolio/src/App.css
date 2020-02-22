@@ -75,6 +75,9 @@ body {
   margin-top: 8vh;
   width: 75vw;
   padding: 0px;
+  font-family: 'Open Sans', sans-serif;
+  white-space: pre;
+  padding: 10px;
 }
 
 #preGame button {
@@ -88,14 +91,46 @@ body {
   max-width: 200px;
 }
 
-#preGamePadding { 
+.columnPadding { 
   flex-grow: 1;
 }
 
-#gameLost {
-
+.gameOver {
+  display: flex;
+  width: 100vw;
+  height:100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-#gameWon {
+.gameOver h1 {
+  text-align: center;
+  color: white;
+  font-size: 60px;
+  margin-top: 10vh;
+  width: 75vw;
+  font-family: Arial;
+}
 
+.gameOver button {
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  margin-bottom: 20vh;
+  width: 10vw;
+  max-width: 300px;
+}
+
+.gameTextLink {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  border-bottom: 1px solid;
+}
+
+.gameTextLink:hover {
+  font-weight: 700;
 }

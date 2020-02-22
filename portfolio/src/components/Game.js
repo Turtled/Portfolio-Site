@@ -5,16 +5,30 @@ import * as GameStates from "../GameLogic/GameStates"
 
 let gameLoop;//need to declare outside of Game() cause otherwise we'll lose reference to it and it will keep looping forever, never being garbage collected
 
+let caretPos = 1;
+let node;
+
 function Game() {
 
-    const [gameText, setGameText] = useState("Hello, my name is Daniel. Welcome to my portfolio.\nCheck out _my projects_. Or, view my resume _here_.\n\nYou can also type text in here and then press Play to destroy it.");
+    document.onselectionchange = function() {
+        var sel = window.getSelection();
+        console.log("Selection pos:", sel.focusOffset, sel);
+      };
+
+    //use ⪼ character to start a link
+    //use ⪻ character to end a link
+    const [gameText, setGameText] = useState("Hello, my name is Daniel. Welcome to my portfolio.\nCheck out ⪼my projects⪻. Or, view my resume ⪼here⪻.\n\nYou can also edit this text and press Play to destroy it.");
+
+    //add href values here. When links are parsed, it will map these to each pair of ⪼ ⪻ characters, based on index
+    let hrefs = ["https://learn.lambdaschool.com/cs/module/reccRh9h6ccXghfA4/", "https://github.com/Turtled/Sorting"]
+
     const [canvas, setCanvas] = useState();
     const [gameState, setGameState] = useState(GameStates.GAME_NOT_STARTED);
 
     let canvasRef = React.createRef();
 
     document.addEventListener('input', function (event) {
-        if (event.target.tagName.toLowerCase() !== 'textarea') return;
+        if (event.target.tagName.toLowerCase() !== 'div') return;
         autoExpand(event.target);
     }, false);
 
@@ -47,14 +61,29 @@ function Game() {
         window.addEventListener('resize', resizeCanvas)
     })
 
-    function setGameStateCallback(newGameState) {
-        var sCallerName;
-        {
-            let re = /([^(]+)@|at ([^(]+) \(/g;
-            let aRegexResult = re.exec(new Error().stack);
-            sCallerName = aRegexResult[1] || aRegexResult[2];
+    useEffect(() => {
+        console.log("gameText changed", gameText);
+        if(node) {
+        // var sel = window.getSelection();
+        // if(sel.){
+        //     caretPos = sel.anchorOffset;
+        // }
+        try {
+        var el = node;
+        var range = document.createRange();
+        var sel = window.getSelection();
+        range.setStart(sel.anchorNode, caretPos);
+        console.log("setting caret to ", caretPos);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        }catch {}
         }
-        console.log(sCallerName);
+    }, [gameText])
+
+    console.log("Rerendering Game")
+
+    function setGameStateCallback(newGameState) {
         if (gameState === GameStates.GAME_IN_PROGRESS) {
             //console.log("SOMEONE SET IT TO IN PROGRESS. THAT FRICKIN FRICK")
         }
@@ -69,6 +98,9 @@ function Game() {
             console.log("Setting game state to: ", newGameState);
             setGameState(newGameState);
         }
+        if (newGameState === GameStates.GAME_NOT_STARTED) {
+            gameLoop.stopLoop();
+        }
     }
 
     function resizeCanvas() {
@@ -78,12 +110,125 @@ function Game() {
         }
     }
 
+    let splitGameText = []//gameText but split where links were found and link names deleted
+    let gameTextLinks = []//array of a elements
+
+    let readingLink = false;
+    let currentLinkText = "";
+    let lastLinkEndIndex = 0;
+    for (let i = 0; i < gameText.length; i++) {
+
+        if (gameText[i] === "⪻") {//end of link or end of text
+            lastLinkEndIndex = i + 1;
+            gameTextLinks.push(currentLinkText === "" ? "nopelul" : currentLinkText);
+            currentLinkText = "";
+            readingLink = false;
+        }
+        if (readingLink) {
+            currentLinkText += gameText[i];
+        }
+        if (gameText[i] === "⪼") {//start of link
+            readingLink = true;
+            //console.log("Parsing link, text before: ", gameText.substring(lastLinkEndIndex, gameText[i - 1]), "game text:", gameText, "substring start:", lastLinkEndIndex, "end:", i - 1)
+            splitGameText.push(gameText.substring(lastLinkEndIndex, i));
+        }
+        if (i === gameText.length - 1) {//end of gameText
+            splitGameText.push(gameText.substring(lastLinkEndIndex, i + 1));
+        }
+        
+
+    }
+
+    function onLinkClick(e) {
+        console.log("link clicked");
+        window.location.href = e.target.getAttribute("href");
+    }
+
+    function formatGameText() {
+
+
+
+        let linkTextIndex = 0;
+        let gameTextIndex = 0;
+
+        let result = []
+
+        //console.log("attemping to intertwingle text and links. Looping ", splitGameText.length + gameTextLinks.length, "times");
+        for (let i = 0; i < splitGameText.length + gameTextLinks.length; i++) {
+            if (i % 2 === 0) {
+                let text = splitGameText[gameTextIndex];
+                gameTextIndex++;
+                result.push(text);
+            }
+            else {
+                console.log("rendering link with text", gameTextLinks[linkTextIndex], "href is", hrefs[linkTextIndex])
+                    let link = <a style={{height: "1px"}} className="gameTextLink hover-shadow hover-color" href={hrefs[linkTextIndex]} onClick={(e) => onLinkClick(e)}>{gameTextLinks[linkTextIndex]}</a>;
+                    linkTextIndex++;
+                    result.push(link);
+            }
+        }
+
+        return result;
+    }
+
+    function deformatGameText(innerHTML) {
+
+        let readingElement = false;
+        let result = ""
+
+        for (let i = 0; i < innerHTML.length; i++) {
+            if (innerHTML[i] === "<" && innerHTML[i + 1] !== "/") {
+                result += "⪼";
+                readingElement = true;
+            }
+            if (innerHTML[i] === "<" && innerHTML[i + 1] === "/") {
+                result += "⪻";
+                readingElement = true;
+            }
+            else if (innerHTML[i] === ">") {
+                readingElement = false;
+            }
+            else if (!readingElement) {
+                result += innerHTML[i];
+            }
+        }
+        console.log("InnerHTML, deformatted result:", innerHTML, result);
+        return result;
+    }
+
+    //console.log("result:" + formatGameText())
+
+    //chrome by default will do weird shit like adding more divs inside of the contenteditable div after pressing enter, lets prevent that.
+    function customEnterBehaviour(e) {
+        if (e.keyCode === 13) {
+            document.execCommand('insertHTML', false, '\n');
+            e.preventDefault();
+        }
+    }
+
     switch (gameState) {
         case GameStates.GAME_NOT_STARTED:
             return (
                 <div id="preGame">
-                    <div><textarea cols="40" id="preGameText" onChange={(e) => { setGameText(e.target.value) }}>{gameText}</textarea></div>
-                    <div id="preGamePadding"></div>
+                    {/* <div><textarea cols="40" id="preGameText" onChange={(e) => { setGameText(e.target.value) }}>{gameText}<a > test</a></textarea></div> */}
+                    <div><div id="preGameText" contenteditable="true" onKeyUp={(e) => {
+                    }} onInput={(e) => {
+                        //super hacky but it fixes a bug, so.....
+                        var sel = window.getSelection();
+                        caretPos = sel.focusOffset;
+                        node = e.target;
+                        setGameText(e.target.textContent);//deformatGameText(e.target.innerHTML.replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, ""))
+                    }} onKeyDown={(e) => { customEnterBehaviour(e) }}>
+                        {
+                            gameText.includes("⪻") || gameText.includes("⪼") ?
+                                formatGameText().map((textOrLink) => {
+                                    return textOrLink;
+                                })
+                                :
+                                gameText
+                        }
+                    </div></div>
+                    <div class="columnPadding"></div>
                     <button onClick={(e) => { setGameState(GameStates.GAME_IN_PROGRESS) }}>Play</button>
                 </div>
             );
@@ -92,7 +237,7 @@ function Game() {
                 if (gameLoop) {
                     gameLoop.stopLoop();
                 }
-                gameLoop = new GameLoop(canvas, gameText, setGameStateCallback);
+                gameLoop = new GameLoop(canvas, gameText.replace(/⪼/g, "").replace(/⪻/g, ""), setGameStateCallback);
                 gameLoop.startLoop();
             }
             return (
@@ -100,16 +245,18 @@ function Game() {
             );
         case GameStates.GAME_END_LOSS:
             return (
-                <div id="gameLost">
+                <div class="gameOver">
                     <h1>GAME OVER</h1>
-                    <button onClick={(e) => { e.preventDefault(); setGameState(GameStates.GAME_NOT_STARTED) }}>Continue</button>
+                    <div class="columnPadding"></div>
+                    <button class="continueButton" onClick={(e) => { e.preventDefault(); setGameState(GameStates.GAME_NOT_STARTED) }}>Continue</button>
                 </div>
             );
         case GameStates.GAME_END_WIN:
             return (
-                <div id="gameWon">
+                <div class="gameOver">
                     <h1>YOU WON</h1>
-                    <button onClick={(e) => { setGameState(GameStates.GAME_NOT_STARTED) }}>Continue</button>
+                    <div class="columnPadding"></div>
+                    <button class="continueButton" onClick={(e) => { setGameState(GameStates.GAME_NOT_STARTED) }}>Continue</button>
                 </div>
             );
     }
