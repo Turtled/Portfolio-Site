@@ -20,7 +20,7 @@ function Game() {
     const [gameText, setGameText] = useState("Hello, my name is Daniel. Welcome to my portfolio.\nCheck out ⪼my projects⪻. Or, view my resume ⪼here⪻.\n\nYou can also edit this text and press Play to destroy it.");
 
     //add href values here. When links are parsed, it will map these to each pair of ⪼ ⪻ characters, based on index
-    let hrefs = ["https://learn.lambdaschool.com/cs/module/reccRh9h6ccXghfA4/", "https://github.com/Turtled/Sorting"]
+    let hrefs = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ", "https://www.youtube.com/watch?v=dQw4w9WgXcQ"]
 
     const [canvas, setCanvas] = useState();
     const [gameState, setGameState] = useState(GameStates.GAME_NOT_STARTED);
