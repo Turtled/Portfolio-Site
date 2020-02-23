@@ -23,6 +23,8 @@ class GameLoop {
     shouldLoop = true;
     c;//canvas context
 
+    startCountDown = 4;
+
     //for game end transition effect
     charsToRestoreInOrder = [];
     timeBetweenRestores = 20;//20ms, .02 seconds
@@ -36,7 +38,7 @@ class GameLoop {
         this.c = canvas.getContext("2d");
         this.originalText = text;
         this.setGameState = setGameState;
-        this.ball = new Ball({ x: window.innerWidth / 2, y: window.innerHeight / 2 }, { width: 20, height: 20 }, this.playGameEndEffect.bind(this));
+        this.ball = new Ball({ x: window.innerWidth / 2 - 10, y: window.innerHeight / 2 + window.innerHeight / 3 }, { width: 20, height: 20 }, this.playGameEndEffect.bind(this));
     }
 
     setStyles(fontSize) {
@@ -175,6 +177,15 @@ class GameLoop {
             deltaTime = 0;
         }
 
+        //draw start count down
+        if(this.startCountDown >= 1) {
+            this.setStyles(70);
+            this.c.globalAlpha = this.startCountDown - Math.floor(this.startCountDown);
+            this.c.fillText(Math.floor(this.startCountDown), window.innerWidth / 2, window.innerHeight / 2);
+        }
+
+        this.startCountDown -= deltaTime/1100;//milisec to sec but a bit slower
+
         //draw chars
         this.characters.forEach((char) => {
             //char.drawBounds(c);
@@ -210,12 +221,13 @@ class GameLoop {
         this.paddle.draw(this.c);
 
         //draw ball
-        this.ball.move(this.paddle, this.characters, deltaTime);
+        if(this.startCountDown <= 1) {//don't move the ball until the countdown has finished
+            this.ball.move(this.paddle, this.characters, deltaTime);
+        }
         this.ball.draw(this.c);
 
+        //cool game end effect
         if (this.charsToRestoreInOrder.length > 0) {
-            //do game end effect
-            //console.log("drawing end text: ", this.gameEndText, "At", window.innerWidth / 2 - (this.c.measureText(this.gameEndText).width / 2), window.innerHeight / 2)
             this.setStyles(70);
             this.c.globalAlpha = this.endTextOpacity < 0 ? 0 : this.endTextOpacity;
             this.c.fillText(this.won ? "You Won!" : "You Lost.", window.innerWidth / 2, window.innerHeight / 2);
@@ -235,16 +247,19 @@ class GameLoop {
                 }
                 this.restoreIndex++;
                 this.timeSinceLastRestore = 0;
-                if(this.restoreIndex > this.originalText.length + this.charsToRestoreInOrder.length * 2) {//yeah... uhhh basically this is just to make sure the characters have all been restored before continuing
-                    this.endTextOpacity -= deltaTime/1000; //This will fade the opacity by about 1 per second
-                    if(this.endTextOpacity < -0.5){
-                        //this.endTextOpacity = 0;
+                if(this.restoreIndex > this.originalText.length / 2) {//yeah... uhhh basically this is just to make sure the characters have all been restored before continuing
+                    console.log("FADING");
+                    this.endTextOpacity -= deltaTime/800; //This will fade the opacity by about 1.2 per second
+                    if(this.endTextOpacity < -0.25){
                         if(this.won) {
                             this.setGameState(GameStates.GAME_NOT_STARTED);
                         }else{
                             this.setGameState(GameStates.GAME_NOT_STARTED);
                         }
                     }
+                }
+                else{
+                    console.log(this.restoreIndex, ">", this.originalText.length)
                 }
             }
         }

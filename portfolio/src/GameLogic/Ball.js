@@ -8,7 +8,7 @@ class Ball {
     stop = false;
 
     constructor(position, size, endGame) {
-        this.velocity = { x: .2, y: .5 };
+        this.velocity = { x: 0, y: -.5 };
         this.size = size;
         this.position = position;
         this.endGame = endGame;

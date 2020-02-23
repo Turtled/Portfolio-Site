@@ -10,14 +10,15 @@ let node;
 
 function Game() {
 
-    document.onselectionchange = function() {
+    document.onselectionchange = function () {
         var sel = window.getSelection();
         console.log("Selection pos:", sel.focusOffset, sel);
-      };
+    };
 
+    let originalText = "Hello, my name is Daniel. Welcome to my portfolio.\nCheck out ⪼my projects⪻. Or, view my resume ⪼here⪻.\n\nYou can also edit this text and press Play to destroy it.";
     //use ⪼ character to start a link
     //use ⪻ character to end a link
-    const [gameText, setGameText] = useState("Hello, my name is Daniel. Welcome to my portfolio.\nCheck out ⪼my projects⪻. Or, view my resume ⪼here⪻.\n\nYou can also edit this text and press Play to destroy it.");
+    const [gameText, setGameText] = useState(originalText);
 
     //add href values here. When links are parsed, it will map these to each pair of ⪼ ⪻ characters, based on index
     let hrefs = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ", "https://www.youtube.com/watch?v=dQw4w9WgXcQ"]
@@ -63,22 +64,20 @@ function Game() {
 
     useEffect(() => {
         console.log("gameText changed", gameText);
-        if(node) {
         // var sel = window.getSelection();
         // if(sel.){
         //     caretPos = sel.anchorOffset;
         // }
         try {
-        var el = node;
-        var range = document.createRange();
-        var sel = window.getSelection();
-        range.setStart(sel.anchorNode, caretPos);
-        console.log("setting caret to ", caretPos);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
-        }catch {}
-        }
+            var range = document.createRange();
+            var sel = window.getSelection();
+            range.setStart(sel.anchorNode, caretPos);
+            // console.error(sel.anchorNode);
+            console.log("setting caret to ", caretPos);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        } catch { }
     }, [gameText])
 
     console.log("Rerendering Game")
@@ -120,7 +119,9 @@ function Game() {
 
         if (gameText[i] === "⪻") {//end of link or end of text
             lastLinkEndIndex = i + 1;
-            gameTextLinks.push(currentLinkText === "" ? "nopelul" : currentLinkText);
+            //if(currentLinkText === "my projects" || currentLinkText === "here") {
+            gameTextLinks.push(currentLinkText);
+            //}
             currentLinkText = "";
             readingLink = false;
         }
@@ -135,7 +136,7 @@ function Game() {
         if (i === gameText.length - 1) {//end of gameText
             splitGameText.push(gameText.substring(lastLinkEndIndex, i + 1));
         }
-        
+
 
     }
 
@@ -162,9 +163,9 @@ function Game() {
             }
             else {
                 console.log("rendering link with text", gameTextLinks[linkTextIndex], "href is", hrefs[linkTextIndex])
-                    let link = <a style={{height: "1px"}} className="gameTextLink hover-shadow hover-color" href={hrefs[linkTextIndex]} onClick={(e) => onLinkClick(e)}>{gameTextLinks[linkTextIndex]}</a>;
-                    linkTextIndex++;
-                    result.push(link);
+                let link = <a onChange={() => { console.error("DONT TOUCH MY LINKS") }} style={{ height: "1px" }} className="gameTextLink hover-shadow hover-color" href={hrefs[linkTextIndex]} onClick={(e) => onLinkClick(e)}>{gameTextLinks[linkTextIndex]}</a>;
+                linkTextIndex++;
+                result.push(link);
             }
         }
 
@@ -204,6 +205,9 @@ function Game() {
             document.execCommand('insertHTML', false, '\n');
             e.preventDefault();
         }
+        // if (e.keyCode === 8) {
+        //     e.preventDefault();
+        // }
     }
 
     switch (gameState) {
@@ -211,13 +215,15 @@ function Game() {
             return (
                 <div id="preGame">
                     {/* <div><textarea cols="40" id="preGameText" onChange={(e) => { setGameText(e.target.value) }}>{gameText}<a > test</a></textarea></div> */}
-                    <div><div id="preGameText" contenteditable="true" onKeyUp={(e) => {
+                    <div><span id="preGameText" contenteditable="true" onKeyUp={(e) => {
                     }} onInput={(e) => {
                         //super hacky but it fixes a bug, so.....
                         var sel = window.getSelection();
                         caretPos = sel.focusOffset;
                         node = e.target;
+                        console.error(e.target)
                         setGameText(e.target.textContent);//deformatGameText(e.target.innerHTML.replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, ""))
+                        //setGameText(deformatGameText(e.target.innerHTML.replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, "")))
                     }} onKeyDown={(e) => { customEnterBehaviour(e) }}>
                         {
                             gameText.includes("⪻") || gameText.includes("⪼") ?
@@ -227,9 +233,12 @@ function Game() {
                                 :
                                 gameText
                         }
-                    </div></div>
+                    </span></div>
                     <div class="columnPadding"></div>
-                    <button onClick={(e) => { setGameState(GameStates.GAME_IN_PROGRESS) }}>Play</button>
+                    <div className="buttonContainer">
+                        <div><button onClick={(e) => { setGameState(GameStates.GAME_IN_PROGRESS) }}>Play</button></div>
+                        <div><button onClick={(e) => { setGameText(originalText) }}>Reset</button></div>
+                    </div>
                 </div>
             );
         case GameStates.GAME_IN_PROGRESS:

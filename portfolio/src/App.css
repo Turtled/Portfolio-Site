@@ -65,8 +65,8 @@ body {
 }
 
 #preGameText {
+  display: inline-block;
   resize: none;
-  height: 20vh;
   background-color: transparent;
   border: none;
   text-align: center;
@@ -74,10 +74,11 @@ body {
   font-size: 30px;
   margin-top: 8vh;
   width: 75vw;
-  padding: 0px;
+  padding: 1px;
   font-family: 'Open Sans', sans-serif;
   white-space: pre;
-  padding: 10px;
+  line-height: 40px;
+
 }
 
 #preGame button {
@@ -86,9 +87,14 @@ body {
   text-align: center;
   color: white;
   font-size: 30px;
-  margin-bottom: 20vh;
   width: 5vw;
-  max-width: 200px;
+  min-width: 200px;
+  cursor: pointer;
+  margin-bottom: 1vh;
+}
+
+#preGame button:hover {
+  font-weight: 600;
 }
 
 .columnPadding { 
@@ -119,7 +125,6 @@ body {
   text-align: center;
   color: white;
   font-size: 30px;
-  margin-bottom: 20vh;
   width: 10vw;
   max-width: 300px;
 }
@@ -133,4 +138,13 @@ body {
 
 .gameTextLink:hover {
   font-weight: 700;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20vh;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
 }
