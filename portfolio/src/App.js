@@ -1,8 +1,11 @@
 import React from 'react';
 import './App.css';
 import Game from "./components/Game";
-
+import Navbar from "./components/Navbar";
 import Particles from 'react-particles-js'; 
+import About from "./components/PageSections/About"
+import Skills from "./components/PageSections/Skills"
+import Projects from "./components/PageSections/Projects"
 
 function App() {
 
@@ -124,6 +127,10 @@ let particleConfig =
         <header className="App-header">
         </header>
         <Game/>
+        <Navbar/>
+        <About/>
+        <Skills/>
+        <Projects/>
     </div>
   );
 }
