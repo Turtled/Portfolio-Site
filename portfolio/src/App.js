@@ -6,6 +6,8 @@ import Particles from 'react-particles-js';
 import About from "./components/PageSections/About"
 import Skills from "./components/PageSections/Skills"
 import Projects from "./components/PageSections/Projects"
+import Contact from "./components/PageSections/Contact"
+import Footer from "./components/Footer"
 
 function App() {
 
@@ -131,6 +133,8 @@ let particleConfig =
         <About/>
         <Skills/>
         <Projects/>
+        <Contact/>
+        <Footer/>
     </div>
   );
 }

@@ -49,9 +49,9 @@ class GameLoop {
         if (this.fontSize > 30) this.fontSize = 30;
 
         if(!fontSize){
-            this.c.font = this.fontSize + 'px ' + 'Open Sans';
+            this.c.font = this.fontSize + 'px ' + 'Raleway';
         }else{
-            this.c.font = fontSize + 'px ' + 'Open Sans';
+            this.c.font = fontSize + 'px ' + 'Raleway';
         }
         this.c.globalAlpha = 1;
         this.c.lineWidth = 2;

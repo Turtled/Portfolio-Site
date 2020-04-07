@@ -10,18 +10,25 @@ function Navbar() {
     let navRef = React.createRef();
 
     return (
-        <div ref={navRef} className={"navbar" + navClass}>
-            TEST
+        <div ref={navRef} className={navClass + "-navbar-container"}>
+            <div className={"navbar" + navClass}>
+                <div id="navbar-item-selected" className="navbar-item">HOME</div>
+                <div className="navbar-item">ABOUT</div>
+                <div className="navbar-item">SKILLS</div>
+                <div className="navbar-item">PROJECTS</div>
+                <div className="navbar-item">CONTACT</div>
+            </div>
+            <div className="navbar-placeholder"></div>
         </div>
     );
-    
-    function updateNavbarState () {
-        
+
+    function updateNavbarState() {
+
         if (window.pageYOffset > window.innerHeight) {
             console.log("SETTING FIXED")
-            setNavClass(" fixed"); 
+            setNavClass(" fixed");
         }
-        else { 
+        else {
             setNavClass(" relative")
             console.log("SETTING RELATIVE")
         }
