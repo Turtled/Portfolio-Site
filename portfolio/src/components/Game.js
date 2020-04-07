@@ -258,7 +258,7 @@ function Game() {
                 gameLoop.startLoop();
             }
             return (
-                <div id="canvas-container"><canvas onMouseMove={(e) => { if (gameLoop) gameLoop.updateMousePosition({ x: e.pageX, y: e.pageY }) }} ref={canvasRef} id="game"></canvas></div>
+                <div id="canvas-container"><canvas onTouchMove={(e) => { if (gameLoop) gameLoop.updateMousePosition({ x: e.touches[0].clientX, y: e.touches[0].clientY }) }} onMouseMove={(e) => { if (gameLoop) gameLoop.updateMousePosition({ x: e.pageX, y: e.pageY }) }} ref={canvasRef} id="game"></canvas></div>
             );
         case GameStates.GAME_END_LOSS:
             return (
