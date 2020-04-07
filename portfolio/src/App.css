@@ -54,6 +54,14 @@ body {
 #game {
   /* background-color: rgb(20, 32, 49); */
 }
+/* 
+.App {
+  overflow: hidden;
+} */
+
+#canvas-container {
+
+}
 
 #preGame {
   display: flex;
@@ -71,9 +79,8 @@ body {
   border: none;
   text-align: center;
   color: white;
-  font-size: 30px;
+  font-size: clamp(12px, 3vw, 30px);
   margin-top: 8vh;
-  width: 75vw;
   padding: 1px;
   font-family: 'Open Sans', sans-serif;
   white-space: pre;

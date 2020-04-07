@@ -43,6 +43,11 @@ class GameLoop {
 
     setStyles(fontSize) {
 
+        // (12px, 3vw, 30px)
+        this.fontSize = window.innerWidth * .03;
+        if (this.fontSize < 12) this.fontSize = 12;
+        if (this.fontSize > 30) this.fontSize = 30;
+
         if(!fontSize){
             this.c.font = this.fontSize + 'px ' + 'Open Sans';
         }else{
@@ -130,6 +135,10 @@ class GameLoop {
 
     startLoop() {
         console.log("Start")
+
+        this.c.canvas.width = window.innerWidth;
+        this.c.canvas.height = window.innerHeight;
+
         this.doFrame();
         this.setStyles();
 

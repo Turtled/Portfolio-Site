@@ -5,9 +5,6 @@ import * as GameStates from "../GameLogic/GameStates"
 
 let gameLoop;//need to declare outside of Game() cause otherwise we'll lose reference to it and it will keep looping forever, never being garbage collected
 
-let caretPos = 1;
-let node;
-
 function Game() {
 
     document.onselectionchange = function () {
@@ -15,7 +12,8 @@ function Game() {
         console.log("Selection pos:", sel.focusOffset, sel);
     };
 
-    let originalText = "Hello, my name is Daniel. Welcome to my portfolio.\nCheck out ⪼my projects⪻. Or, view my resume ⪼here⪻.\n\nYou can also edit this text and press Play to destroy it.";
+    let originalText = "Hello, my name is Daniel. Welcome to my portfolio.\nCheck out ⪼my projects⪻. Or, view my resume ⪼here⪻.\n\nYou can also press Play to destroy this text!";
+
     //use ⪼ character to start a link
     //use ⪻ character to end a link
     const [gameText, setGameText] = useState(originalText);
@@ -25,6 +23,7 @@ function Game() {
 
     const [canvas, setCanvas] = useState();
     const [gameState, setGameState] = useState(GameStates.GAME_NOT_STARTED);
+    const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
     let canvasRef = React.createRef();
 
@@ -55,30 +54,42 @@ function Game() {
     useEffect(() => {
         setCanvas(canvasRef.current);
         console.log("Canvas:", canvas)
-        resizeCanvas();//do an initial resize for when it first renders, this function will also be called every time the window is resized too
     }, [canvasRef])
 
     useEffect(() => {
-        window.addEventListener('resize', resizeCanvas)
-    })
+        window.addEventListener('resize', updateWindowSize)
+        console.error("ADDING USE RESIZE LISTENER")
+        console.log("Resizing")
+        if (canvas) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+    }, [])
 
     useEffect(() => {
-        console.log("gameText changed", gameText);
-        // var sel = window.getSelection();
-        // if(sel.){
-        //     caretPos = sel.anchorOffset;
-        // }
-        try {
-            var range = document.createRange();
-            var sel = window.getSelection();
-            range.setStart(sel.anchorNode, caretPos);
-            // console.error(sel.anchorNode);
-            console.log("setting caret to ", caretPos);
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
-        } catch { }
-    }, [gameText])
+        console.log("Resizing")
+        if (canvas) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+    }, [windowSize])
+
+    // useEffect(() => {
+    //     console.log("gameText changed", gameText);
+    //     // var sel = window.getSelection();
+    //     // if(sel.){
+    //     //     caretPos = sel.anchorOffset;
+    //     // }
+    //     try {
+    //         var range = document.createRange();
+    //         var sel = window.getSelection();
+    //         range.setStart(sel.anchorNode, caretPos);
+    //         // console.error(sel.anchorNode);
+    //         range.collapse(true);
+    //         sel.removeAllRanges();
+    //         sel.addRange(range);
+    //     } catch { }
+    // }, [gameText])
 
     console.log("Rerendering Game")
 
@@ -102,11 +113,8 @@ function Game() {
         }
     }
 
-    function resizeCanvas() {
-        if (canvas) {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+    function updateWindowSize() {
+        setWindowSize({ width: window.innerWidth, height: window.innerHeight })
     }
 
     let splitGameText = []//gameText but split where links were found and link names deleted
@@ -215,14 +223,14 @@ function Game() {
             return (
                 <div id="preGame">
                     {/* <div><textarea cols="40" id="preGameText" onChange={(e) => { setGameText(e.target.value) }}>{gameText}<a > test</a></textarea></div> */}
-                    <div><span id="preGameText" contenteditable="true" onKeyUp={(e) => {
+                    <span id="preGameText" onKeyUp={(e) => {
                     }} onInput={(e) => {
                         //super hacky but it fixes a bug, so.....
-                        var sel = window.getSelection();
-                        caretPos = sel.focusOffset;
-                        node = e.target;
-                        console.error(e.target)
-                        setGameText(e.target.textContent);//deformatGameText(e.target.innerHTML.replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, ""))
+                        // var sel = window.getSelection();
+                        // caretPos = sel.focusOffset;
+                        // node = e.target;
+                        // console.error(e.target)
+                        // setGameText(e.target.textContent);//deformatGameText(e.target.innerHTML.replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, ""))
                         //setGameText(deformatGameText(e.target.innerHTML.replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, "")))
                     }} onKeyDown={(e) => { customEnterBehaviour(e) }}>
                         {
@@ -233,11 +241,11 @@ function Game() {
                                 :
                                 gameText
                         }
-                    </span></div>
+                    </span>
                     <div class="columnPadding"></div>
                     <div className="buttonContainer">
-                        <div><button onClick={(e) => { setGameState(GameStates.GAME_IN_PROGRESS) }}>Play</button></div>
-                        <div><button onClick={(e) => { setGameText(originalText) }}>Reset</button></div>
+                        <div><button onClick={(e) => { setGameState(GameStates.GAME_IN_PROGRESS); updateWindowSize(); }}>Play</button></div>
+                        {/* <div><button onClick={(e) => { setGameText(originalText) }}>Reset</button></div> */}
                     </div>
                 </div>
             );
@@ -250,7 +258,7 @@ function Game() {
                 gameLoop.startLoop();
             }
             return (
-                <canvas onMouseMove={(e) => { if (gameLoop) gameLoop.updateMousePosition({ x: e.pageX, y: e.pageY }) }} ref={canvasRef} id="game"></canvas>
+                <div id="canvas-container"><canvas onMouseMove={(e) => { if (gameLoop) gameLoop.updateMousePosition({ x: e.pageX, y: e.pageY }) }} ref={canvasRef} id="game"></canvas></div>
             );
         case GameStates.GAME_END_LOSS:
             return (
