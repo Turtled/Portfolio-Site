@@ -8,6 +8,27 @@ function About() {
                 <div className="section-title">SKILLS</div>
                 <div className="section-title-underline"></div>
             </div>
+
+            <div id="skill-list">
+                <div className="skill-container">
+                <div className="skill">React</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+
+                <div className="skill-container"> <div className="skill-offset" />
+                <div className="skill">Javascript</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+
+                <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /> 
+                <div className="skill">CSS</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+
+                <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" /> 
+                <div className="skill">HTML</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+
+                <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" />
+                <div className="skill">Node.js</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+
+                <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" />
+                <div className="skill">Express</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+            </div>
+
         </section>
     );
 

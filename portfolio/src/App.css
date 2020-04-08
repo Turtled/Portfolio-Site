@@ -137,17 +137,80 @@ body {
 }
 
 .page-section {
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
   padding: 100px 0 130px 0;
 }
 
+.small-title {
+  color: #616161;
+  font-size: 18pt;
+  font-family: "Raleway-bold";
+  margin: 20px 0 15px 0;
+}
+
 #about {
-  background-color: white; 
+  background-color: white;
+  padding-bottom: 150px; 
 }
 
 #skills {
   background-color: #f5f5f5;
+}
+
+/* <div id="skill-list">
+<div className="skill-container"> <div className="skill-offset"/> <div className="skill">React</div><div className="skill-checkmark"></div></div> */
+
+#skill-list {
+  display: flex;
+  flex-direction: column;
+  padding-left: 8vw;
+}
+
+.skill-container {
+  display: flex;
+  height: 28px;
+  margin-bottom: 15px;
+}
+
+.skill-offset {
+  margin-left: calc(28vw / 6);
+  height: 0;
+  width: 0;
+}
+
+.skill {
+  height: 28px;
+  background-color: #04c2c9;
+  width: 100px;
+  color: white;
+  font-family: "Raleway-bold";
+  font-size: 11pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.skill-bar {
+  /* background-color: #00a1a7; */
+  background-image: linear-gradient(to right,#00a1a7, #04c2c9);
+  width: calc(60vw - 128px);
+  height: 28px;
+}
+
+.skill-checkmark {
+  height: 18px;
+  width: 18px;
+  background-color: #04c2c9;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  font-size: 16pt;
 }
 
 #projects {
@@ -174,6 +237,35 @@ body {
   color: #444649;
   font-size: 30pt;
   font-family: "raleway-bold";
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#about-row-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#profile-image {
+  margin-bottom: 65px;
+}
+
+#about-title {
+
+}
+
+.text {
+  color: #616161;
+  font-size: 12pt;
+  font-family: "Raleway";
+  line-height: 18pt;
+  text-align: center;
 }
 
 #contact-title {
