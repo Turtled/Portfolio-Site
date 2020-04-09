@@ -82,6 +82,7 @@ body {
   font-size: 12pt;
   display: flex;
   align-items: center;
+  z-index: 1000000000000000000;
 }
 
 .relative-navbar-container .navbar {
@@ -94,6 +95,7 @@ body {
   font-size: 12pt;
   display: flex;
   align-items: center;
+  z-index: 1000000000000000000;
 }
 
 .fixed-navbar-container .navbar-placeholder {
@@ -109,12 +111,16 @@ body {
   margin-right: 20px;
 }
 
-.navbar-item:hover {
-  cursor: pointer;
+.active {
+  color: #e31b6d;
 }
 
-#navbar-item-selected {
-  color: #e31b6d;
+
+#canvas-container {
+  height: 100vh;
+}
+.navbar-item:hover {
+  cursor: pointer;
 }
 
 .fixed {
@@ -140,6 +146,7 @@ body {
   /* height: 100vh; */
   width: 100%;
   padding: 100px 0 130px 0;
+  margin-bottom: -1px;
 }
 
 .small-title {
@@ -154,6 +161,13 @@ body {
   padding-bottom: 150px; 
 }
 
+.about-link {
+  color: #009ada;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
 #skills {
   background-color: #f5f5f5;
 }
@@ -164,7 +178,16 @@ body {
 #skill-list {
   display: flex;
   flex-direction: column;
-  padding-left: 8vw;
+  align-items: center;
+  padding-right: 4vw;
+}
+
+#skills-title {
+  margin-top: -20px;
+  margin-bottom: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  text-align: center;
 }
 
 .skill-container {
@@ -174,7 +197,7 @@ body {
 }
 
 .skill-offset {
-  margin-left: calc(28vw / 6);
+  margin-left: 4.6vw;
   height: 0;
   width: 0;
 }
@@ -182,7 +205,7 @@ body {
 .skill {
   height: 28px;
   background-color: #04c2c9;
-  width: 100px;
+  width: 150px;
   color: white;
   font-family: "Raleway-bold";
   font-size: 11pt;
@@ -211,20 +234,532 @@ body {
   font-weight: bold;
   color: white;
   font-size: 16pt;
+  background-image: url("./images/checkmark.png");
+  background-size: 25px;
+  background-position: left; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
 }
 
 #projects {
   background-color: white;
+  padding-bottom: 150px;
+}
+
+/* <div id="project-list">
+<div className="project">
+    <h3 className="project-title">A Project</h3>
+    <h6 className="project-subtitle">React / Python</h6>
+    <div className="learn-more-button">LEARN MORE</div> */
+
+#tally-project {
+  background-image: url("./images/tally.PNG");
+  background-size: cover;
+  background-position-x: left; /* Center the image */
+  background-position-y: top;
+  background-repeat: no-repeat; /* Do not repeat the image */
+}
+#covid-project {
+  background-image: url("./images/covid-tracker.PNG");
+  background-size: cover;
+  background-position: left; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+}
+#project3 {
+  background-color: tomato;
+}
+#digdug-project {
+  background-image: url("./images/digdug.png");
+  background-size: cover;
+  background-position: right; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+}
+#project5 {
+  background-color: cornflowerblue;
+}
+#project6 {
+  background-color: maroon;
+}
+
+#project-list {
+  display: flex;
+  justify-content: center;
+  max-width: 1170px;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  animation-name: project-hover-out;
+  animation-duration: .5s;
+}
+
+.project:hover {
+  opacity: 1;
+  animation-name: project-hover-in;
+  animation-duration: .5s;
+}
+
+.project:hover .project-title {
+  animation-name: project-hover-title-in;
+  animation-duration: .5s;
+}
+
+.project:hover .learn-more-button {
+  animation-name: project-hover-button-in;
+  animation-direction: forwards;
+  animation-duration: .5s;
+}
+
+@keyframes project-hover-button-in {
+  from { 
+    margin-bottom: 0px; 
+  }
+  to { 
+    margin-bottom: 75px; 
+  }
+}
+
+@keyframes project-hover-button-out {
+  from { 
+    margin-bottom: 75px; 
+  }
+  to { 
+    margin-bottom: 0px; 
+  }
+}
+
+@keyframes project-hover-title-in {
+  from { 
+    margin-top: 0px; 
+  }
+  to { 
+    margin-top: 75px; 
+  }
+}
+
+@keyframes project-hover-title-out {
+  from { 
+    margin-top: 75px; 
+  }
+  to { 
+    margin-top: 0px; 
+  }
+}
+
+@keyframes project-hover-in {
+  from { 
+    opacity: 0; 
+  }
+  to { 
+    opacity: 1; 
+  }
+}
+
+@keyframes project-hover-out {
+  from { 
+    opacity: 1; 
+  }
+  to { 
+    opacity: 0; 
+  }
+}
+
+.project-container {
+  width: 390px;
+  height: 300px;
+}
+
+.project-title {
+  font-family: "Raleway-bold";
+  font-size: 16pt;
+  color: #1b242f;
+  text-align: center;
+  line-height: 18pt;
+  margin-top: 75px;
+  animation-name: project-hover-title-out;
+  animation-duration: .5s;
+}
+
+#project-popup {
+  position: fixed;
+  width: 100vw;  
+  height: 100vh;  
+  top: 0;  
+  left: 0;  
+  right: 0;  
+  bottom: 0;  
+  margin: auto;  
+  background-color: rgba(0, 0, 0, 0.582);
+  z-index: 100000000000000000000000000;
+}
+
+#project-popup-contents {
+  width: 700px;
+  left: 25%;  
+  right: 25%;  
+  top: 3%;  
+  position: absolute; 
+  margin: auto;  
+  background-color: white;
+  max-height: 95vh;
+  overflow-y: auto;
+}
+
+/* <div id="project-popup">
+<div id="project-popup-contents">
+    <img src="TODO add source dynamically" id="project-popup-image"></img>
+    <div id="project-popup-title">TODO add text dynamically</div>
+    <div id="project-popup-subtitle">TODO add text dynamically</div>
+    <div id="project-popup-linebreak"></div>
+    <div id="project-popup-text">TODO add text dynamically</div>
+    <div className="project-popup-info">
+        <div id="project-popup-link-list">
+            <a>View Site</a>
+            <a>GitHub</a>
+            <a>Other</a>
+        </div>
+        <div id="project-popup-close"></div>
+        </div>
+</div>
+</div> */
+#project-popup-info {
+  padding: 35px 60px 0 25px;
+}
+
+#project-popup-title {
+  font-size: 22pt;
+  line-height: 35pt;
+  font-family: "Raleway-bold";
+  color: #444;
+}
+
+#project-popup-subtitle {
+  font-size: 11pt;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: #c0c0c0;
+  font-family: "Raleway-bold";
+  font-weight: 300;
+  padding-bottom: 15px;
+}
+
+#project-popup-text {
+  font-size: 11pt;
+  line-height: 18pt;
+  margin-top: 15px;
+  color: #444;
+  text-align: left;
+  font-family: "Raleway";
+}
+
+#project-popup-image {
+  width: 100%;
+  height: auto;
+}
+
+/* <div id="project-popup-controls">
+<div id="project-popup-link-list">
+    <a>View Site</a>
+    <a>GitHub</a>
+    <a>Other</a>
+</div>
+<div id="project-popup-close"></div>
+</div> */
+
+#project-popup-controls {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+}
+
+#project-popup-link-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 20px;
+  padding-top: 30px;
+}
+
+#project-popup-link-list a {
+  color: #e31b6d;
+  font-family: "Raleway-bold";
+  font-size: 12pt;
+  text-decoration: none;
+}
+
+#project-popup-link-list div {
+  padding-top: 10px;
+}
+
+#project-popup-close {
+  background-image: url("./images/close-gray.png");
+  background-size: 24px;
+  background-position: right; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  height: 50px;
+  width: 50px;
+  margin-top: auto;
+  margin-right: -45px;
+  cursor: pointer;
+}
+
+.learn-more-button {
+  color: #1b242f;
+  text-align: center;
+  border: 2px solid #e31b6d;
+  font-size: 13pt;
+  padding: 7px 0;
+  width: 170px;
+  font-family: "Raleway";
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 75px;
+  animation: project-hover-button-out .5s forwards;
+}
+
+.learn-more-button:hover {
+  color: white;
+  background-color: #e31b6d;
+}
+
+
+.project-subtitle {
+  color: #e31b6d;
+  text-align: center;
+  font-family: "Raleway";
+  font-size: 12pt;
+  line-height: 18pt;
 }
 
 #contact {
   background-color: #252934;
-  height: calc(100vh - 458px);
+  height: calc(100vh - 458px);  
+  min-height: 450px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#contact-subtitle { 
+  color: #04c2c9;
+  font-size: 12pt;
+  font-family: "Raleway";
+  margin: 50px 0px;
+  font-weight: 600;
+}
+
+/* <form id="contact-form">
+<input className="contact-form-input" id="name"></input>
+<input className="contact-form-input" id="email"></input>
+<textarea className="contact-form-input" id="message"></textarea>
+<div id="success">Your message was sent successfully. Thanks!</div><div id="submit-button">SUBMIT</div>
+</form> */
+
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 530px;
+}
+
+.contact-form-input {
+  width: 500px;
+  border: none;
+  padding: 10px 15px;
+  background-color: #1e242c;
+  caret-color: white;
+  font-size: 12pt;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.contact-form-input:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+#submit-button {
+  padding: 10px 30px;
+  outline: none;
+  border: 2px solid #fff;
+  cursor: pointer;
+  font-size: 12pt;
+  font-family: "Arial";
+  color: white;
+  animation: submit-hover-out .5s forwards;
+  margin-left: auto;
+  margin-top: 5px;
+}
+
+#success {
+  font-family: "Raleway";
+  font-size: 10pt;
+  font-weight: 600;
+  width: 530px;
+  height: 36px;
+  text-align: center;
+  background-color: #04c986;
+  border: 1px solid #157c59;
+  color: #157051;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#success-text {
+  text-align: center;
+  width: 100%;
+  padding-left: 36px;
+}
+
+#success-close {
+  text-align: center;
+  width: 36px;
+  padding-left: 10px;
+  cursor: pointer;
+  background-image: url("./images/close.png");
+  background-size: 18px;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  height: 100%;
+}
+
+#success-hidden {
+  display: none;
+}
+
+#submit-button:hover {
+  animation: submit-hover-in .5s forwards;
+}
+
+@keyframes submit-hover-out {
+  from { 
+    background-color: #04c2c9; 
+    border-color: #04c2c9;
+  }
+  to { 
+    background-color: transparent; 
+    border-color: #fff;
+  }
+}
+
+@keyframes submit-hover-in {
+  from { 
+    background-color: transparent; 
+    border-color: #fff;
+  }
+  to { 
+    background-color: #04c2c9; 
+    border-color: #04c2c9; 
+  }
+}
+
+#message {
+  height: 150px;
+  min-width: 500px;
+  resize: none;
 }
 
 #footer {
   height: 228px;
   background-color: #1b242f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+
+#footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-link {
+  width: 55px;
+  height: 55px;
+  background-color: #262f38;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  margin: 0px 15px;
+}
+
+.footer-link:hover {
+  margin: 2.5px 17.5px;
+  width: 50px;
+  height: 50px;
+  background-color: #04c2c9;
+}
+
+#back-to-top {
+  color: white;
+  background-color: #e31b6d;
+  width: 47px;
+  height: 50px;
+  background-image: url("./images/backtotop-icon.png");
+  background-size: 25px;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  position: absolute;
+  top: -25px;
+  right: 0;
+  left: 0;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+}
+
+#back-to-top:hover {
+  width: 44px;
+  height: 47px;
+  background-color: #f51e78;
+}
+
+#linkedin-icon {
+  background-image: url("./images/linkedin-icon.png");
+  background-size: 30px;
+}
+
+#github-icon {
+  background-image: url("./images/github-icon.png");
+  background-size: 30px;
+}
+
+#twitter-icon {
+  background-image: url("./images/twitter-icon.png");
+  background-size: 40px;
+}
+
+#signature {
+  margin-top: 35px;
+  margin-bottom: 5px;
+}
+
+.copyright {
+  color: #8f9aa7;
+  font-size: 10pt;
+  opacity: .6;
+  text-align: center;
+  font-family: "Raleway";
+  display: flex;
+  justify-content: center;
+  letter-spacing: 1pt;
+}
+
+#copyright-year {
+  color: #e31b6d;
+  margin-left: 5px;
+  text-decoration: none;
 }
 
 .section-title-container {
@@ -253,11 +788,16 @@ body {
 }
 
 #profile-image {
-  margin-bottom: 65px;
+  margin-bottom: 25px;
 }
 
 #about-title {
 
+}
+
+#about-text {
+  font-size: 14pt;
+  line-height: 20pt;
 }
 
 .text {
@@ -274,6 +814,7 @@ body {
 
 #contact-title-underline {
   background-color: white;
+  margin-bottom: 0;
 }
 
 .section-title-underline {

@@ -3,33 +3,48 @@ import React, { useEffect, useState } from 'react';
 function About() {
 
     return (
-        <section className="page-section" id="skills">
-            <div className="section-title-container">
-                <div className="section-title">SKILLS</div>
-                <div className="section-title-underline"></div>
-            </div>
+        <div id="nav-skills">
+            <section className="page-section" id="skills">
+                <div className="section-title-container">
+                    <div className="section-title">SKILLS</div>
+                    <div className="section-title-underline"></div>
+                </div>
 
-            <div id="skill-list">
-                <div className="skill-container">
-                <div className="skill">React</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+                <div className="section-title-container">
+                    <div id="skills-title" className="small-title">Here are some of my favorite languages and frameworks to work with:</div>
+                </div>
 
-                <div className="skill-container"> <div className="skill-offset" />
-                <div className="skill">Javascript</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+                <div id="skill-list">
+                    <div className="skill-container">
+                    <div className="skill">React</div><div className="skill-bar"/><div className="skill-checkmark"></div></div>
 
-                <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /> 
-                <div className="skill">CSS</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+                    <div className="skill-container"><div className="skill-offset" />
+                    <div className="skill">Javascript</div><div className="skill-bar"/><div className="skill-checkmark"></div></div>
 
-                <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" /> 
-                <div className="skill">HTML</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+                    <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" />
+                    <div className="skill">CSS/Sass/LESS</div><div className="skill-bar"/><div className="skill-checkmark"></div></div>
 
-                <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" />
-                <div className="skill">Node.js</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
+                    <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" />
+                    <div className="skill">HTML</div><div className="skill-bar"/><div className="skill-checkmark"></div></div>
 
-                <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" />
-                <div className="skill">Express</div><div className="skill-bar"/><div className="skill-checkmark">✓</div></div>
-            </div>
+                    <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" />
+                    <div className="skill">Unity</div><div className="skill-bar"/><div className="skill-checkmark"></div></div>
 
-        </section>
+                    <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" /><div className="skill-offset" />
+                    <div className="skill">C#</div><div className="skill-bar"/><div className="skill-checkmark"></div></div>
+
+                    <div className="skill-container"> <div className="skill-offset" /><div className="skill-offset" />
+                    <div className="skill">Python</div><div className="skill-bar"/><div className="skill-checkmark"></div></div>
+
+                    <div className="skill-container"> <div className="skill-offset" />
+                    <div className="skill">Node.js</div><div className="skill-bar"/><div className="skill-checkmark"></div></div>
+
+                    <div className="skill-container">
+                    <div className="skill">Express</div><div className="skill-bar"/><div className="skill-checkmark"></div></div>
+                </div>
+
+            </section>
+        </div>
     );
 
 }

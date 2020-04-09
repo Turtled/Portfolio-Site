@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { Link, animateScroll as scroll } from "react-scroll";
+
 function Navbar() {
 
     useEffect(() => {
@@ -12,11 +14,11 @@ function Navbar() {
     return (
         <div ref={navRef} className={navClass + "-navbar-container"}>
             <div className={"navbar" + navClass}>
-                <div id="navbar-item-selected" className="navbar-item">HOME</div>
-                <div className="navbar-item">ABOUT</div>
-                <div className="navbar-item">SKILLS</div>
-                <div className="navbar-item">PROJECTS</div>
-                <div className="navbar-item">CONTACT</div>
+                <Link activeClass="active" to="nav-home" spy={true} smooth={true} offset={0} duration={500}><div className="navbar-item">HOME</div></Link>
+                <Link activeClass="active" to="nav-about" spy={true} smooth={true} offset={-50} duration={500}><div className="navbar-item">ABOUT</div></Link>
+                <Link activeClass="active" to="nav-skills" spy={true} smooth={true} offset={-50} duration={500}><div className="navbar-item">SKILLS</div></Link>
+                <Link activeClass="active" to="nav-projects" spy={true} smooth={true} offset={-35} duration={500}><div className="navbar-item">PROJECTS</div></Link>
+                <Link activeClass="active" to="nav-contact" spy={true} smooth={true} offset={50} duration={500}><div className="navbar-item">CONTACT</div></Link>
             </div>
             <div className="navbar-placeholder"></div>
         </div>

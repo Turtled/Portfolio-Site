@@ -82,14 +82,14 @@ let particleConfig =
     }
   },
   "interactivity": {
-    "detect_on": "canvas",
+    "detect_on": "window",
     "events": {
       "onhover": {
         "enable": true,
         "mode": "bubble"
       },
       "onclick": {
-        "enable": true,
+        "enable": false,
         "mode": "repulse"
       },
       "resize": true
@@ -102,11 +102,11 @@ let particleConfig =
         }
       },
       "bubble": {
-        "distance": 97.44926547616143,
-        "size": 4,
-        "duration": 0.3,
+        "distance": 120,
+        "size": 3,
+        "duration": 20,
         "opacity": 1,
-        "speed": 3
+        "speed": .1
       },
       "repulse": {
         "distance": 200,
@@ -126,8 +126,6 @@ let particleConfig =
   return (
     <div className="App">
       <Particles params={particleConfig} className="particles"></Particles>
-        <header className="App-header">
-        </header>
         <Game/>
         <Navbar/>
         <About/>

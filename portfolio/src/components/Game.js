@@ -3,6 +3,8 @@ import GameLoop from "../GameLogic/GameLoop"
 
 import * as GameStates from "../GameLogic/GameStates"
 
+import { Link, animateScroll as scroll } from "react-scroll";
+
 let gameLoop;//need to declare outside of Game() cause otherwise we'll lose reference to it and it will keep looping forever, never being garbage collected
 
 function Game() {
@@ -12,20 +14,21 @@ function Game() {
         console.log("Selection pos:", sel.focusOffset, sel);
     };
 
-    let originalText = "Hello, my name is Daniel. Welcome to my portfolio.\nCheck out ⪼my projects⪻. Or, view my resume ⪼here⪻.\n\nYou can also press Play to destroy this text!";
+    let originalText = "Hello, my name is Daniel. Welcome to my portfolio.\nCheck out ⪼my projects⪻. Or, contact me ⪼here⪻.\n\nYou can also press Play to destroy this text!";
 
     //use ⪼ character to start a link
     //use ⪻ character to end a link
     const [gameText, setGameText] = useState(originalText);
 
     //add href values here. When links are parsed, it will map these to each pair of ⪼ ⪻ characters, based on index
-    let hrefs = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ", "https://www.youtube.com/watch?v=dQw4w9WgXcQ"]
+    let hrefs = ["nav-projects", "nav-contact"]
 
     const [canvas, setCanvas] = useState();
     const [gameState, setGameState] = useState(GameStates.GAME_NOT_STARTED);
     const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
     let canvasRef = React.createRef();
+    let canvasContainerRef = React.createRef();
 
     document.addEventListener('input', function (event) {
         if (event.target.tagName.toLowerCase() !== 'div') return;
@@ -58,17 +61,16 @@ function Game() {
 
     useEffect(() => {
         window.addEventListener('resize', updateWindowSize)
-        console.error("ADDING USE RESIZE LISTENER")
-        console.log("Resizing")
         if (canvas) {
+            console.log("Resizing to " + canvasContainerRef.current.clientWidth)
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
     }, [])
 
     useEffect(() => {
-        console.log("Resizing")
         if (canvas) {
+            console.log("Resizing 2 " + canvasContainerRef.current.clientWidth)
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
@@ -171,7 +173,8 @@ function Game() {
             }
             else {
                 console.log("rendering link with text", gameTextLinks[linkTextIndex], "href is", hrefs[linkTextIndex])
-                let link = <a onChange={() => { console.error("DONT TOUCH MY LINKS") }} style={{ height: "1px" }} className="gameTextLink hover-shadow hover-color" href={hrefs[linkTextIndex]} onClick={(e) => onLinkClick(e)}>{gameTextLinks[linkTextIndex]}</a>;
+                // <Link activeClass="active" to="nav-projects" spy={true} smooth={true} offset={-30} duration={500}>
+                let link = <Link activeClass="active" spy={true} smooth={true} offset={20} duration={500} style={{ height: "1px" }} className="gameTextLink hover-shadow hover-color" to={hrefs[linkTextIndex]}>{gameTextLinks[linkTextIndex]}</Link>;
                 linkTextIndex++;
                 result.push(link);
             }
@@ -221,31 +224,33 @@ function Game() {
     switch (gameState) {
         case GameStates.GAME_NOT_STARTED:
             return (
-                <div id="preGame">
-                    {/* <div><textarea cols="40" id="preGameText" onChange={(e) => { setGameText(e.target.value) }}>{gameText}<a > test</a></textarea></div> */}
-                    <span id="preGameText" onKeyUp={(e) => {
-                    }} onInput={(e) => {
-                        //super hacky but it fixes a bug, so.....
-                        // var sel = window.getSelection();
-                        // caretPos = sel.focusOffset;
-                        // node = e.target;
-                        // console.error(e.target)
-                        // setGameText(e.target.textContent);//deformatGameText(e.target.innerHTML.replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, ""))
-                        //setGameText(deformatGameText(e.target.innerHTML.replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, "")))
-                    }} onKeyDown={(e) => { customEnterBehaviour(e) }}>
-                        {
-                            gameText.includes("⪻") || gameText.includes("⪼") ?
-                                formatGameText().map((textOrLink) => {
-                                    return textOrLink;
-                                })
-                                :
-                                gameText
-                        }
-                    </span>
-                    <div class="columnPadding"></div>
-                    <div className="buttonContainer">
-                        <div><button onClick={(e) => { setGameState(GameStates.GAME_IN_PROGRESS); updateWindowSize(); }}>Play</button></div>
-                        {/* <div><button onClick={(e) => { setGameText(originalText) }}>Reset</button></div> */}
+                <div id="nav-home">
+                    <div id="preGame">
+                        {/* <div><textarea cols="40" id="preGameText" onChange={(e) => { setGameText(e.target.value) }}>{gameText}<a > test</a></textarea></div> */}
+                        <span id="preGameText" onKeyUp={(e) => {
+                        }} onInput={(e) => {
+                            //super hacky but it fixes a bug, so.....
+                            // var sel = window.getSelection();
+                            // caretPos = sel.focusOffset;
+                            // node = e.target;
+                            // console.error(e.target)
+                            // setGameText(e.target.textContent);//deformatGameText(e.target.innerHTML.replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, ""))
+                            //setGameText(deformatGameText(e.target.innerHTML.replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, "")))
+                        }} onKeyDown={(e) => { customEnterBehaviour(e) }}>
+                            {
+                                gameText.includes("⪻") || gameText.includes("⪼") ?
+                                    formatGameText().map((textOrLink) => {
+                                        return textOrLink;
+                                    })
+                                    :
+                                    gameText
+                            }
+                        </span>
+                        <div class="columnPadding"></div>
+                        <div className="buttonContainer">
+                            <div><button onClick={(e) => { setGameState(GameStates.GAME_IN_PROGRESS); updateWindowSize(); }}>Play</button></div>
+                            {/* <div><button onClick={(e) => { setGameText(originalText) }}>Reset</button></div> */}
+                        </div>
                     </div>
                 </div>
             );
@@ -258,7 +263,9 @@ function Game() {
                 gameLoop.startLoop();
             }
             return (
-                <div id="canvas-container"><canvas onTouchMove={(e) => { if (gameLoop) gameLoop.updateMousePosition({ x: e.touches[0].clientX, y: e.touches[0].clientY }); console.log("Touch") }} onMouseMove={(e) => { if (gameLoop) gameLoop.updateMousePosition({ x: e.pageX, y: e.pageY }) }} ref={canvasRef} id="game"></canvas></div>
+                <div id="nav-home">
+                    <div ref={canvasContainerRef} id="canvas-container"><canvas style={{ width: "100%", height: "100%" }} onTouchMove={(e) => { if (gameLoop) gameLoop.updateMousePosition({ x: e.touches[0].clientX, y: e.touches[0].clientY }); console.log("Touch") }} onMouseMove={(e) => { if (gameLoop) gameLoop.updateMousePosition({ x: e.pageX, y: e.pageY }) }} ref={canvasRef} id="game"></canvas></div>
+                </div>
             );
         case GameStates.GAME_END_LOSS:
             return (
