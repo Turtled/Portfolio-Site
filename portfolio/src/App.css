@@ -180,6 +180,7 @@ body {
   flex-direction: column;
   align-items: center;
   padding-right: 4vw;
+  min-height: 400px;
 }
 
 #skills-title {
@@ -194,6 +195,45 @@ body {
   display: flex;
   height: 28px;
   margin-bottom: 15px;
+  animation-name: skill-hover-out;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+.skill-container:hover {
+  animation-name: skill-hover-in;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes skill-hover-in {
+  from { 
+    height: 28px;
+    margin-bottom: 15px;
+    margin-top: 0px;
+    /* padding-right: 0;
+    padding-left: 0; */
+  }
+  to { 
+    height: 36px;
+    margin-bottom: 10px;
+    margin-top: -5px;
+    /* padding-right: 8px;
+    padding-left: 8px;  */
+  }
+}
+
+@keyframes skill-hover-out {
+  from { 
+    height: 36px; 
+    margin-bottom: 10px;
+    margin-top: -5px;
+  }
+  to { 
+    height: 28px; 
+    margin-bottom: 15px;
+    margin-top: 0px;
+  }
 }
 
 .skill-offset {
@@ -203,7 +243,7 @@ body {
 }
 
 .skill {
-  height: 28px;
+  height: 100%;
   background-color: #04c2c9;
   width: 150px;
   color: white;
@@ -219,14 +259,14 @@ body {
   /* background-color: #00a1a7; */
   background-image: linear-gradient(to right,#00a1a7, #04c2c9);
   width: calc(60vw - 128px);
-  height: 28px;
+  height: 100%;
 }
 
 .skill-checkmark {
-  height: 18px;
+  height: 100%;
   width: 18px;
   background-color: #04c2c9;
-  padding: 5px;
+  padding-right: 10px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -17,7 +17,7 @@ function Contact() {
 
                 <div id="contact-subtitle">Have a question or want to work together? Email me!</div>
 
-                <form id="contact-form">
+                <form id="contact-form" name="contact" method="POST" data-netlify="true">
                     <input type="text" placeholder="Your Name" className="contact-form-input" id="name"></input>
                     <input type="email" placeholder="Your Email Address" className="contact-form-input" id="email"></input>
                     <textarea type="text" placeholder="Your Message" className="contact-form-input" id="message"></textarea>
