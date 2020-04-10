@@ -582,7 +582,7 @@ body {
 
 #contact {
   background-color: #252934;
-  height: calc(100vh - 458px);  
+  height: calc(100vh - 380px);  
   min-height: 450px;
   display:flex;
   flex-direction: column;
@@ -594,6 +594,21 @@ body {
   font-size: 12pt;
   font-family: "Raleway";
   margin: 50px 0px;
+  font-weight: 600;
+}
+
+#contact-methods {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  color: white;
+  font-family: "Raleway";
+  font-size: 10pt;
+  text-align: center;
+}
+
+#contact-email {
+  color: #e31b6d;
+  text-decoration: none;
   font-weight: 600;
 }
 

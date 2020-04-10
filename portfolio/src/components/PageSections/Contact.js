@@ -18,12 +18,19 @@ function Contact() {
                 <div id="contact-subtitle">Have a question or want to work together? Email me!</div>
 
                 <form id="contact-form" name="contact" method="POST" data-netlify="true">
-                    <input type="text" placeholder="Your Name" className="contact-form-input" id="name"></input>
-                    <input type="email" placeholder="Your Email Address" className="contact-form-input" id="email"></input>
-                    <textarea type="text" placeholder="Your Message" className="contact-form-input" id="message"></textarea>
+                    <input type="hidden" name="form-name" value="contact" />
+                    <input type="text" name="name" placeholder="Your Name" className="contact-form-input" id="name"></input>
+                    <input type="email" name="email" placeholder="Your Email Address" className="contact-form-input" id="email"></input>
+                    <textarea type="text" name="message" placeholder="Your Message" className="contact-form-input" id="message"></textarea>
                     <div id={successId}><div id="success-text">Your message was sent successfully. Thanks!</div><div onClick={() => {setSuccessId("success-hidden")}} id="success-close"></div></div>
-                    <div onClick={() => {setSuccessId("success")}} id="submit-button">SUBMIT</div>
+                    <button type="submit" onClick={() => {setSuccessId("success")}} id="submit-button">SUBMIT</button>
                 </form>
+
+                <div id="contact-methods">
+                    Or email me manually at<br/>
+                    <br/>
+                    <a id="contact-email" href="mailto:DanielFirpoDev@gmail.com" target="_blank" rel="noopener noreferrer">DanielFirpoDev@gmail.com</a>
+                </div>
 
             </section>
         </div>
