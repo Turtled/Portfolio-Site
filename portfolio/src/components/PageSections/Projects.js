@@ -43,6 +43,8 @@ function About() {
                     <div className="section-title-underline"></div>
                 </div>
 
+                <div id="tap-for-info">Tap for info</div>
+
                 <div id="project-list">
                     <div onClick={() => { setSelectedProject(tallyProject) }} id="tally-project" className="project-container">
                         <div className="project">
