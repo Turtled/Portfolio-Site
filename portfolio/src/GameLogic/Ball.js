@@ -57,6 +57,9 @@ class Ball {
             this.timeSinceLastCollision = 0;
             this.velocity.y *= -1;
             this.velocity.x = paddle.distanceFromCenter(this.position) / 10;
+            if(window.innerWidth < 680) {
+                this.velocity.x /= 2.2; 
+            }
             console.log(paddle.distanceFromCenter(this.position) / 10)
         }
 
