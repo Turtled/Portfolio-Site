@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CovidTracker from "../../images/covid-tracker.PNG"
 import Tally from "../../images/tally.PNG"
 import DigDug from "../../images/digdug.png"
+import PyCity from "../../images/pycity.PNG"
 
 function About() {
 
@@ -35,6 +36,16 @@ function About() {
         github: "https://github.com/Turtled/DigDug"
     }
 
+    let pycityProject = {
+        title: "PyCity",
+        subtitle: "EXPLORE A PROCEDURALLY GENERATED \"CITY\" WITH FRIENDS",
+        text: "A multiplayer, procedurally generated dungeon crawler game. Made with React and Django in 1 week.",
+        image: PyCity,
+        site: "https://pycity.netlify.com/",
+        github: "https://github.com/cs26-bw"
+    }
+
+
     return (
         <div id="nav-projects">
             <section className="page-section" id="projects">
@@ -60,10 +71,10 @@ function About() {
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
                     </div>
-                    <div id="project3" className="project-container">
+                    <div onClick={() => { setSelectedProject(pycityProject) }} id="pycity-project" className="project-container">
                         <div className="project">
-                            <h3 className="project-title">A Project</h3>
-                            <h6 className="project-subtitle">React / Python</h6>
+                            <h3 className="project-title">PyCity</h3>
+                            <h6 className="project-subtitle">React / Django</h6>
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
                     </div>
@@ -74,7 +85,7 @@ function About() {
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
                     </div>
-                    <div id="project5" className="project-container">
+                    {/* <div id="project5" className="project-container">
                         <div className="project">
                             <h3 className="project-title">A Project</h3>
                             <h6 className="project-subtitle">React / Python</h6>
@@ -87,7 +98,9 @@ function About() {
                             <h6 className="project-subtitle">React / Python</h6>
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
-                    </div>
+                    </div> */}
+                    <div className="empty-project"></div>
+                    <div className="empty-project"></div>
                 </div>
 
                 {
