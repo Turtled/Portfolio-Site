@@ -12,9 +12,6 @@ function About() {
                     <div className="section-title">ABOUT</div>
                     <div className="section-title-underline"></div>
                 </div>
-                {/* I'm a Front-End Developer for ChowNow in Los Angeles, CA.
-I have serious passion for UI effects, animations and creating intuitive, dynamic user experiences.
-Let's make something special. */}
                 <div className="flex-row">
                     <div id="about-row-left">
                         <img id="profile-image" src={profile}></img>

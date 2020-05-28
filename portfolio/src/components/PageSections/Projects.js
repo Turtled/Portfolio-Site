@@ -12,7 +12,7 @@ function About() {
     let covidProject = {
         title: "Covid-19 Tracker",
         subtitle: "UP TO DATE INFO, ALL IN ONE PLACE.",
-        text: "Up to date info on testing, confirmed cases, and deaths for US states and counties all in one place. Built with Python, Plotly, FastAPI, and MongoDB.",
+        text: "Up to date info on testing, confirmed cases, and deaths for US states and counties all in one place. Built with Python, Plotly, FastAPI, and MongoDB. Contributed to the project as a front end developer by making sure every detail matched the design doc. Used Plotly, HTML, and CSS.",
         image: CovidTracker,
         site: "https://ncov19.us/",
         github: "https://github.com/ncov19-us"
@@ -21,7 +21,7 @@ function About() {
     let tallyProject = {
         title: "Tally AI",
         subtitle: "UNLOCK YOUR BUSINESS DATA.",
-        text: "View your business's reputation as a whole, from review analytics. Built with React, Redux, Express, and Postgres.",
+        text: "View your business's reputation as a whole, from review analytics. Built with React, Redux, Express, and Postgres. Contributed to the dashboard's widgets system, tab system, and many other frontend features using React, Redux, HTML, and CSS.",
         image: Tally,
         site: "https://www.tally-ai.com/",
         github: "https://github.com/Lambda-School-Labs/tally-ai-fe"
@@ -30,7 +30,7 @@ function About() {
     let digdugProject = {
         title: "Dig Dug Clone",
         subtitle: "YOUR FAVORITE RETRO ARCADE GAME, NOW PLAYABLE IN THE BROWSER!",
-        text: "A recreation of the classic retro arcade game \'Dig Dug.\' Made entirely with Unity/C# to practice my problem solving skills.",
+        text: "A recreation of the classic retro arcade game \'Dig Dug.\' Made entirely on my own with Unity/C# to practice my problem solving skills.",
         image: DigDug,
         site: "https://turtled.itch.io/dig-dug",
         github: "https://github.com/Turtled/DigDug"
@@ -39,7 +39,7 @@ function About() {
     let pycityProject = {
         title: "PyCity",
         subtitle: "EXPLORE A PROCEDURALLY GENERATED \"CITY\" WITH FRIENDS",
-        text: "A multiplayer, procedurally generated dungeon crawler game. Made with React and Django in 1 week.",
+        text: "A multiplayer, procedurally generated dungeon crawler game. Made with React and Django in 1 week. Contributed to the frontend visualization/animations using HTML5 canvas.",
         image: PyCity,
         site: "https://pycity.netlify.com/",
         github: "https://github.com/cs26-bw"
