@@ -10,7 +10,7 @@ function Footer() {
             <div>
                 <div id="footer-links">
                     <a href="https://www.linkedin.com/in/daniel-firpo/" target="_blank"><div className="footer-link" id="linkedin-icon" /></a> {/*LinkedIn*/}
-                    <a href="https://github.com/turtled" target="_blank"><div className="footer-link" id="github-icon" /></a> {/*GitHub*/}
+                    <a href="https://github.com/danielfirpo" target="_blank"><div className="footer-link" id="github-icon" /></a> {/*GitHub*/}
                     <a href="https://twitter.com/DanielFirpo2" target="_blank"><div className="footer-link" id="twitter-icon" /></a> {/*Twittah*/}
                 </div>
                 <div className="copyright" id="signature">DANIEL FIRPO · 2020</div>
