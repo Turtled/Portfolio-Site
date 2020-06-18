@@ -1,4 +1,4 @@
-# [Portfolio Site](danielfirpo.com)
+# [Portfolio Site](https://danielfirpo.com/)
 ![](gbXMNmuxYf.gif)
 
  My web development portfolio site!
