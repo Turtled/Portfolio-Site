@@ -4,6 +4,7 @@ import CovidTracker from "../../images/covid-tracker.PNG"
 import Tally from "../../images/tally.PNG"
 import DigDug from "../../images/digdug.png"
 import PyCity from "../../images/pycity.PNG"
+import PennyTrader from "../../images/pennytrader.PNG"
 
 function About() {
 
@@ -15,7 +16,7 @@ function About() {
         text: "Up to date info on testing, confirmed cases, and deaths for US states and counties all in one place. Built with Python, Plotly, FastAPI, and MongoDB. Contributed to the project as a front end developer by making sure every detail matched the design doc. Used Plotly, HTML, and CSS.",
         image: CovidTracker,
         site: "https://ncov19.us/",
-        github: "https://github.com/ncov19-us"
+        github: "https://github.com/DanielFirpo/front-end"
     }
 
     let tallyProject = {
@@ -24,7 +25,7 @@ function About() {
         text: "View your business's reputation as a whole, from review analytics. Built with React, Redux, Express, and Postgres. Contributed to the dashboard's widgets system, tab system, and many other frontend features using React, Redux, HTML, and CSS.",
         image: Tally,
         site: "https://www.tally-ai.com/",
-        github: "https://github.com/Lambda-School-Labs/tally-ai-fe"
+        github: "https://github.com/DanielFirpo/tally-ai-fe"
     }
 
     let digdugProject = {
@@ -33,7 +34,7 @@ function About() {
         text: "A recreation of the classic retro arcade game \'Dig Dug.\' Made entirely on my own with Unity/C# to practice my problem solving skills.",
         image: DigDug,
         site: "https://turtled.itch.io/dig-dug",
-        github: "https://github.com/Turtled/DigDug"
+        github: "https://github.com/DanielFirpo/DigDug"
     }
 
     let pycityProject = {
@@ -42,7 +43,16 @@ function About() {
         text: "A multiplayer, procedurally generated dungeon crawler game. Made with React and Django in 1 week. Contributed to the frontend visualization/animations using HTML5 canvas.",
         image: PyCity,
         site: "https://pycity.netlify.com/",
-        github: "https://github.com/cs26-bw"
+        github: "https://github.com/DanielFirpo/FrontEnd"
+    }
+
+    let pennyProject = {
+        title: "Ultimate Penny Trader",
+        subtitle: "AN ECOMMERCE SITE SPECIALIZING IN SELLING RARE COINS",
+        text: "A fully-featured ecommerce site. Made with React, Express and MySQL. Made entirely on my own in 3 months.",
+        image: PennyTrader,
+        site: "https://ultimatepennytrader.com/",
+        github: "https://github.com/DanielFirpo/penny-trader-fe"
     }
 
 
@@ -64,7 +74,7 @@ function About() {
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
                     </div>
-                    <div  onClick={() => { setSelectedProject(covidProject) }} id="covid-project" className="project-container">
+                    <div onClick={() => { setSelectedProject(covidProject) }} id="covid-project" className="project-container">
                         <div className="project">
                             <h3 className="project-title">Covid Tracker</h3>
                             <h6 className="project-subtitle">Plotly / Python</h6>
@@ -85,28 +95,20 @@ function About() {
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
                     </div>
-                    {/* <div id="project5" className="project-container">
+                    <div onClick={() => { setSelectedProject(pennyProject) }} id="penny-project" className="project-container">
                         <div className="project">
-                            <h3 className="project-title">A Project</h3>
-                            <h6 className="project-subtitle">React / Python</h6>
+                            <h3 className="project-title">Ultimate Penny Trader</h3>
+                            <h6 className="project-subtitle">React / Express</h6>
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
                     </div>
-                    <div id="project6" className="project-container">
-                        <div className="project">
-                            <h3 className="project-title">A Project</h3>
-                            <h6 className="project-subtitle">React / Python</h6>
-                            <div className="learn-more-button">LEARN MORE</div>
-                        </div>
-                    </div> */}
-                    <div className="empty-project"></div>
                     <div className="empty-project"></div>
                 </div>
 
                 {
                     selectedProject ? (
-                        <div onClick={() => {setSelectedProject(undefined)}} id="project-popup">
-                            <div onClick={(e) => {e.stopPropagation()}} id="project-popup-contents">
+                        <div onClick={() => { setSelectedProject(undefined) }} id="project-popup">
+                            <div onClick={(e) => { e.stopPropagation() }} id="project-popup-contents">
                                 <img src={selectedProject.image} id="project-popup-image"></img>
                                 <div id="project-popup-info">
                                     <div id="project-popup-title">{selectedProject.title}</div>
@@ -118,7 +120,7 @@ function About() {
                                             <div><a href={selectedProject.github} target="_blank">GitHub</a></div>
                                             {/* <a>Other</a> */}
                                         </div>
-                                        <div onClick={() => {setSelectedProject(undefined)}} id="project-popup-close"></div>
+                                        <div onClick={() => { setSelectedProject(undefined) }} id="project-popup-close"></div>
                                     </div>
                                 </div>
                             </div>

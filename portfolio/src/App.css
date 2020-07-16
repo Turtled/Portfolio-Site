@@ -316,11 +316,12 @@ body {
   background-position: right; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
 }
-#project5 {
-  background-color: cornflowerblue;
-}
-#project6 {
-  background-color: maroon;
+
+#penny-project {
+  background-image: url("./images/pennytrader.PNG");
+  background-size: cover;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
 }
 
 #project-list {
