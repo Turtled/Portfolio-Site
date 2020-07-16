@@ -3,4 +3,4 @@
 
  My web development portfolio site!
  
- Design from FINDMATTHEW.COM
+ Built in a few weeks using React and HTML5 Canvas with design inspiration from http://findmatthew.com/.
