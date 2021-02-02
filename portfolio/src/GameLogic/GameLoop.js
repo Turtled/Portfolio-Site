@@ -32,6 +32,7 @@ class GameLoop {
     restoreIndex = 0;
     won = false;
     endTextOpacity = 1;
+    randomLossText = "";
 
     constructor(canvas, text, setGameState) {
         console.log("Game loop constructor")
@@ -39,6 +40,8 @@ class GameLoop {
         this.originalText = text;
         this.setGameState = setGameState;
         this.ball = new Ball({ x: window.innerWidth / 2 - 10, y: window.innerHeight / 2 + window.innerHeight / 3 }, { width: 20, height: 20 }, this.playGameEndEffect.bind(this));
+        let lossText = ["You Lost!", "Better Luck Next Time!", "Close!", "Almost, Try Again!", "Good Try!"];
+        this.randomLossText = lossText[Math.floor(Math.random() * lossText.length)];
     }
 
     setStyles(fontSize) {
@@ -147,7 +150,6 @@ class GameLoop {
 
         let totalIndex = 0;
 
-
         let originalTextLines = this.originalText.split("\n");//split on \n, but make sure to include it also
 
         //initialize by filling characters array with Chars for each character in text
@@ -236,10 +238,10 @@ class GameLoop {
         this.ball.draw(this.c);
 
         //cool game end effect
-        if (this.charsToRestoreInOrder.length > 0) {
+        if (this.charsToRestoreInOrder.length > 0) {//loss
             this.setStyles(70);
             this.c.globalAlpha = this.endTextOpacity < 0 ? 0 : this.endTextOpacity;
-            this.c.fillText(this.won ? "You Won!" : "You Lost.", window.innerWidth / 2, window.innerHeight / 2);
+            this.c.fillText(this.won ? "You Won!" : this.randomLossText, window.innerWidth / 2, window.innerHeight / 2);
 
             this.timeSinceLastRestore += deltaTime;
 

@@ -15,7 +15,7 @@ function About() {
         subtitle: "UP TO DATE INFO, ALL IN ONE PLACE.",
         text: "Up to date info on testing, confirmed cases, and deaths for US states and counties all in one place. Built with Python, Plotly, FastAPI, and MongoDB. Contributed to the project as a front end developer by making sure every detail matched the design doc. Used Plotly, HTML, and CSS.",
         image: CovidTracker,
-        site: "https://ncov19.us/",
+        site: undefined,//"https://ncov19.us/" no longer hosted
         github: "https://github.com/DanielFirpo/front-end"
     }
 
@@ -24,7 +24,7 @@ function About() {
         subtitle: "UNLOCK YOUR BUSINESS DATA.",
         text: "View your business's reputation as a whole, from review analytics. Built with React, Redux, Express, and Postgres. Contributed to the dashboard's widgets system, tab system, and many other frontend features using React, Redux, HTML, and CSS.",
         image: Tally,
-        site: "https://www.tally-ai.com/",
+        site: undefined, //"https://www.tally-ai.com/" no longer hosted
         github: "https://github.com/DanielFirpo/tally-ai-fe"
     }
 
@@ -39,7 +39,7 @@ function About() {
 
     let pycityProject = {
         title: "PyCity",
-        subtitle: "EXPLORE A PROCEDURALLY GENERATED \"CITY\" WITH FRIENDS",
+        subtitle: "EXPLORE A PROCEDURALLY GENERATED CITY WITH FRIENDS",
         text: "A multiplayer, procedurally generated dungeon crawler game. Made with React and Django in 1 week. Contributed to the frontend visualization/animations using HTML5 canvas.",
         image: PyCity,
         site: "https://pycity.netlify.com/",
@@ -47,11 +47,11 @@ function About() {
     }
 
     let pennyProject = {
-        title: "Ultimate Penny Trader",
+        title: "Coin Trader",
         subtitle: "AN ECOMMERCE SITE SPECIALIZING IN SELLING RARE COINS",
         text: "A fully-featured ecommerce site. Made with React, Express and MySQL. Made entirely on my own in 3 months.",
         image: PennyTrader,
-        site: "https://ultimatepennytrader.com/",
+        site: undefined, //"https://ultimatepennytrader.com/" no longer hosted
         github: "https://github.com/DanielFirpo/penny-trader-fe"
     }
 
@@ -81,10 +81,10 @@ function About() {
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
                     </div>
-                    <div onClick={() => { setSelectedProject(pycityProject) }} id="pycity-project" className="project-container">
+                    <div onClick={() => { setSelectedProject(pennyProject) }} id="penny-project" className="project-container">
                         <div className="project">
-                            <h3 className="project-title">PyCity</h3>
-                            <h6 className="project-subtitle">React / Django</h6>
+                            <h3 className="project-title">Coin Trader</h3>
+                            <h6 className="project-subtitle">React / Express</h6>
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
                     </div>
@@ -95,10 +95,10 @@ function About() {
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
                     </div>
-                    <div onClick={() => { setSelectedProject(pennyProject) }} id="penny-project" className="project-container">
+                    <div onClick={() => { setSelectedProject(pycityProject) }} id="pycity-project" className="project-container">
                         <div className="project">
-                            <h3 className="project-title">Ultimate Penny Trader</h3>
-                            <h6 className="project-subtitle">React / Express</h6>
+                            <h3 className="project-title">PyCity</h3>
+                            <h6 className="project-subtitle">React / Django</h6>
                             <div className="learn-more-button">LEARN MORE</div>
                         </div>
                     </div>
@@ -116,7 +116,12 @@ function About() {
                                     <div id="project-popup-text">{selectedProject.text}</div>
                                     <div id="project-popup-controls">
                                         <div id="project-popup-link-list">
-                                            <div><a href={selectedProject.site} target="_blank">View Site</a></div>
+                                            {
+                                                selectedProject.site != undefined ?
+                                                    (
+                                                        <div><a href={selectedProject.site} target="_blank">View Site</a></div>
+                                                    ) : (<></>)
+                                            }
                                             <div><a href={selectedProject.github} target="_blank">GitHub</a></div>
                                             {/* <a>Other</a> */}
                                         </div>
